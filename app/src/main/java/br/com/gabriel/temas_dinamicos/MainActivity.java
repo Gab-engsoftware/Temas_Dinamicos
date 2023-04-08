@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -18,14 +17,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme();
         setContentView(R.layout.activity_main);
+        setBtn();
+    }
 
-        getSupportActionBar().hide();
-
-        sharedPreferences = getSharedPreferences("Tema", Context.MODE_PRIVATE);
-        int slectedTheme = sharedPreferences.getInt("SelectedTheme", 0);
-        setDynamicTheme(slectedTheme);
-
+    private void setBtn() {
         btnTheme1 = findViewById(R.id.btnTheme1);
         btnTheme2 = findViewById(R.id.btnTheme2);
         btnTheme3 = findViewById(R.id.btnTheme3);
@@ -35,6 +32,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnTheme2.setOnClickListener(this);
         btnTheme3.setOnClickListener(this);
         btnTheme4.setOnClickListener(this);
+    }
+
+    private void setTheme() {
+        sharedPreferences = getSharedPreferences("Tema", Context.MODE_PRIVATE);
+        int slectedTheme = sharedPreferences.getInt("SelectedTheme", 0);
+        setDynamicTheme(slectedTheme);
     }
 
     private void setDynamicTheme(int slectedTheme) {
@@ -53,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-
     @Override
     public void onClick(View view) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -72,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 editor.putInt("SelectedTheme", 4);
                 break;
         }
-
         editor.apply();
         startActivity(new Intent(MainActivity.this, MainActivity.class));
         finish();
